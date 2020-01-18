@@ -1,0 +1,47 @@
+
+<h1>
+    Show Quiz:
+</h1>
+
+<div class="quizItem">
+
+    <div>
+        <% var attachment = quiz.attachment; %>
+        <% include ../attachments/_show %>
+    </div>
+
+    <div>
+        <% include ../favourites/_stars.ejs %>
+        <br/>
+        Question: <b><%= quiz.question %></b>
+        <br/>
+        Answer: <b><%= quiz.answer %></b>
+    </div>
+
+    <div>
+        <% if (quiz.author && quiz.author.photo) { %>
+            <img class="miniphoto" src="<%= quiz.author.photo.url %>"/>
+        <% } else { %>
+            <img class="miniphoto" src="/images/face.png"/>
+        <% } %>
+        <br/>
+        <small> <%= quiz.author ? quiz.author.username : "Anonymous" %> </small>
+    </div>
+
+</div>
+
+
+<a href="/goback" class="button">Go back</a>
+
+<h1>
+    Tips:
+</h1>
+
+<% include ../tips/_index %>
+
+<% if (locals.loginUser) { %>
+    <% include ../tips/_new %>
+<% } %>
+
+
+<a href="/goback" class="button">Go back</a>

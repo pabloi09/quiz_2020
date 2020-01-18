@@ -1,0 +1,68 @@
+
+<div class="right">
+    <form method="get" action="<%= url %>">
+        <input type="text" name="search" value="<%= locals.search || '' %>" placeholder="question to search" autocomplete="off" />
+        <input type="submit" value="Search">
+
+        <% if (locals.loginUser) { %>
+            <br/>
+
+            <div>
+                <label>Solo favoritos:</label>
+                <input type="checkbox" name="searchfavourites"
+                       value="1" <%= locals.searchfavourites ? 'checked' : '' %> >
+                <img class="star" src="/images/star_yellow.png" \>
+            </div>
+        <% } %>
+
+    </form>
+</div>
+
+<h1>
+    <%= title || "Quizzes" %>:
+</h1>
+
+<table id="quizzesIndex">
+    <% for (var i in quizzes) { %>
+        <% var quiz = quizzes[i]; %>
+        <tr>
+            <td>
+                <% var attachment = quiz.attachment; %>
+                <% include ../attachments/_show %>
+            </td>
+
+            <td>
+                <% include ../favourites/_stars.ejs %>
+
+                <a href="/quizzes/<%= quiz.id %>/play"><%= quiz.question %></a>
+            </td>
+
+            <td>
+                <% if (quiz.author && quiz.author.photo) { %>
+                    <img class="miniphoto" src="<%= quiz.author.photo.url %>"/>
+                <% } else { %>
+                    <img class="miniphoto" src="/images/face.png"/>
+                <% } %>
+
+                <br/>
+
+                <small> <%= quiz.author ? quiz.author.username : "Anonymous" %> </small>
+
+                <br/>
+
+                <% if (locals.loginUser && (locals.loginUser.isAdmin || locals.loginUser.id === quiz.authorId)) { %>
+                    <a href="/quizzes/<%= quiz.id %>" class="button">Show</a>
+
+                    <a href="/quizzes/<%= quiz.id %>/edit" class="button">Edit</a>
+                    <a href="/quizzes/<%= quiz.id %>?_method=DELETE"
+                       onClick="return confirm('Delete: <%= quiz.question %>');"
+                       class="button">Delete</a>
+                <% } %>
+            </td>
+        </tr>
+    <% } %>
+</table>
+
+<% if (locals.loginUser) { %>
+    <a href="/quizzes/new" class="button">Create New Quiz</a>
+<% } %>

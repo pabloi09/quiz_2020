@@ -1,0 +1,38 @@
+<h1>
+    Users
+</h1>
+
+<table id="usersIndex">
+    <% for (var i in users) { %>
+        <tr>
+            <td>
+                <% if (users[i].photo) { %>
+                    <img class="photo" src="<%= users[i].photo.url %>"/>
+                <% } else { %>
+                    <img class="photo" src="/images/face.png"/>
+                <% } %>
+            </td>
+
+            <td>
+                <a href="/users/<%= users[i].id %>"><%= users[i].username %></a>
+                <br/>
+                <%= users[i].isAdmin ? "(admin)" : "" %>
+            </td>
+
+            <td>
+                <% if (locals.loginUser && (locals.loginUser.isAdmin || locals.loginUser.id === users[i].id)) { %>
+                    <a href="/users/<%= users[i].id %>/edit" class="button">Edit</a>
+
+                    <a href="/users/<%= users[i].id %>?_method=DELETE"
+                       onClick="return confirm('Delete user: <%= users[i].username %>');"
+                       class="button">Delete</a>
+                <% } %>
+            </td>
+
+        </tr>
+    <% } %>
+</table>
+
+<% if (locals.loginUser && locals.loginUser.isAdmin) { %>
+    <a href="/users/new" class="button">Create new user</a>
+<% } %>
