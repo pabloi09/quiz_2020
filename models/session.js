@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.DATE
             },
             data: {
-                type: DataTypes.STRING(20000)
+                type: DataTypes.TEXT
             }
         }, {
             sequelize,

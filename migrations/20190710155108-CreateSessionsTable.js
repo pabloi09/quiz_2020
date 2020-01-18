@@ -14,7 +14,7 @@ module.exports = {
                     type: Sequelize.DATE
                 },
                 data: {
-                    type: Sequelize.STRING(20000)
+                    type: Sequelize.TEXT
                 },
                 createdAt: {
                     type: Sequelize.DATE,
